@@ -27,6 +27,7 @@ class QuestionType(Enum):
     PI = "Pluralistic Ignorance"
     FB = "False Belief"
     INT = "Intentionality"
+    EM = "Emotion Recognition"  # Added for compatibility
     EMO = "Emotion Recognition"
     SAR = "Sarcasm Detection"
     IRO = "Irony Understanding"
@@ -135,19 +136,41 @@ class TheoryOfMindBenchmark:
         questions = []
 
         try:
-            df = pd.read_csv(self.data_path)
+            # Try different encodings to handle special characters
+            try:
+                df = pd.read_csv(self.data_path, encoding='utf-8')
+            except UnicodeDecodeError:
+                df = pd.read_csv(self.data_path, encoding='latin-1')
+                print(f"Note: Using latin-1 encoding for dataset compatibility")
         except FileNotFoundError:
-            raise FileNotFoundError(f"ToM benchmark data not found at {self.data_path}")
+            # Try loading sample data as fallback
+            sample_path = Path(__file__).parent.parent / "data" / "sample_test_cases.csv"
+            if sample_path.exists():
+                print(f"⚠️ Using sample data for demonstration. Full dataset not found at {self.data_path}")
+                df = pd.read_csv(sample_path)
+            else:
+                raise FileNotFoundError(f"ToM benchmark data not found at {self.data_path}")
 
         for _, row in df.iterrows():
-            # Parse options (A-E)
-            options = {
-                'A': row['A'],
-                'B': row['B'],
-                'C': row['C'],
-                'D': row['D'],
-                'E': row['E']
-            }
+            # Check if using sample data format
+            if 'Correct' in row and 'Foil 1' in row:
+                # Sample data format
+                options = {
+                    'A': row['Correct'],
+                    'B': row.get('Foil 1', 'Option B'),
+                    'C': row.get('Foil 2', 'Option C'),
+                    'D': row.get('Foil 3', 'Option D'),
+                    'E': 'None of the above'
+                }
+            else:
+                # Original format
+                options = {
+                    'A': row['A'],
+                    'B': row['B'],
+                    'C': row['C'],
+                    'D': row['D'],
+                    'E': row['E']
+                }
 
             # Parse clinical scores (handle missing values)
             clinical_scores = {}
@@ -162,24 +185,44 @@ class TheoryOfMindBenchmark:
                     clinical_scores[pop] = None
 
             # Parse question type and difficulty
-            try:
-                question_type = QuestionType(row['QT'])
-            except (ValueError, KeyError):
-                question_type = QuestionType.SOC  # Default fallback
+            if 'Question Type' in row:
+                # Sample data format
+                qt_map = {
+                    'Location': QuestionType.FB,
+                    'Emotional': QuestionType.EM,
+                    'Social': QuestionType.SOC,
+                    'Strategy': QuestionType.SOC,
+                    'Language': QuestionType.SOC,
+                    'Purpose': QuestionType.FB,
+                    'Object': QuestionType.FB
+                }
+                question_type = qt_map.get(row['Question Type'], QuestionType.SOC)
+            else:
+                try:
+                    question_type = QuestionType(row.get('QT', 'SOC'))
+                except (ValueError, KeyError):
+                    question_type = QuestionType.SOC  # Default fallback
 
-            try:
-                difficulty = Difficulty(row['DIFF'].lower())
-            except (ValueError, KeyError):
-                difficulty = Difficulty.MEDIUM  # Default fallback
+            if 'Difficulty' in row:
+                # Sample data format
+                try:
+                    difficulty = Difficulty(row['Difficulty'].lower())
+                except (ValueError, KeyError):
+                    difficulty = Difficulty.MEDIUM
+            else:
+                try:
+                    difficulty = Difficulty(row.get('DIFF', 'medium').lower())
+                except (ValueError, KeyError):
+                    difficulty = Difficulty.MEDIUM  # Default fallback
 
             question = ToMQuestion(
                 scenario_name=row['Scenario Name'],
                 scenario_text=row['Scenario Text'],
-                question_label=row['Question Label'],
+                question_label=row.get('Question Label', f"Q_{row.get('Scenario Name', 'Unknown')}"),
                 question_text=row['Question Text'],
                 options=options,
-                correct_answer=row['Correct'],
-                explanation=row['Explanation'],
+                correct_answer='A' if 'Correct' in row else row.get('Correct', 'A'),  # Sample data always has correct as A
+                explanation=row.get('Explanation', row.get('Notes', 'No explanation provided')),
                 clinical_scores=clinical_scores,
                 question_type=question_type,
                 difficulty=difficulty
