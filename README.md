@@ -2,18 +2,18 @@
 
 A comprehensive Theory of Mind evaluation suite for Large Language Models based on clinical psychology research. This benchmark translates gold-standard psychological assessments into AI safety evaluations, enabling systematic evaluation of mentalizing capabilities and comparison to clinical population baselines.
 
-## 🧠 Overview
+## Overview
 
-Theory of Mind (ToM) - the ability to understand that others have beliefs, desires, and intentions different from one's own - is fundamental to social cognition and crucial for AI safety. This benchmark provides rigorous evaluation of LLM mentalizing capabilities using clinically-validated scenarios.
+Theory of Mind (ToM) - the ability to understand that others have beliefs, desires, and intentions different from one's own - is fundamental to social cognition and crucial for AI safety. This benchmark provides systematic evaluation of LLM mentalizing capabilities using psychology-inspired scenarios.
 
-### Key Features
+### Features
 
-- **83 Test Scenarios**: Comprehensive coverage of ToM domains with multiple question types
-- **Clinical Population Baselines**: Performance comparison with NBD, DOM, PHEN, and ASD populations
-- **Multi-API Support**: Compatible with OpenAI, Anthropic, and Hugging Face models
-- **Capability Emergence Analysis**: Track ToM development across model scales
-- **Interactive Visualizations**: Rich dashboard for results analysis
-- **Error Pattern Detection**: Systematic failure mode identification
+- 83 test scenarios covering multiple ToM domains
+- Clinical psychology-informed question design
+- Multi-API support (OpenAI, Anthropic, Hugging Face)
+- Capability emergence analysis across model scales
+- Interactive visualization dashboard
+- Systematic error pattern detection
 
 ## 📊 Benchmark Structure
 
@@ -26,27 +26,22 @@ Theory of Mind (ToM) - the ability to understand that others have beliefs, desir
 - **Emotion Recognition (EMO)**: Affective state inference
 - **Sarcasm/Irony Detection (SAR/IRO)**: Non-literal language understanding
 
-### Clinical Population Comparisons
+### Clinical Psychology Inspiration
 
-| Population | Code | Description | Baseline Performance |
-|------------|------|-------------|---------------------|
-| Neurotypical | NBD | Non-brain damaged controls | ~85% accuracy |
-| Dementia | DOM | Cognitive impairment | ~60% accuracy |
-| Phenylketonuria | PHEN | Metabolic condition | ~70% accuracy |
-| Autism Spectrum | ASD | Social cognition differences | ~55% accuracy |
+The benchmark scenarios are inspired by research on Theory of Mind assessment in clinical populations, including studies of neurotypical controls, autism spectrum individuals, and cognitive impairment. Note that direct performance comparisons require careful interpretation due to methodological differences between clinical assessments and LLM evaluations.
 
 ### Difficulty Levels
 
-- **Easy**: Basic false-belief tasks, direct social inference
-- **Medium**: Multi-step reasoning, implicit mental states
-- **Hard**: Complex social dynamics, nested beliefs
+- Easy: Basic false-belief tasks, direct social inference
+- Medium: Multi-step reasoning, implicit mental states
+- Hard: Complex social dynamics, nested beliefs
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Installation
 
 ```bash
-git clone https://github.com/yourusername/theory-of-mind-benchmark.git
+git clone https://github.com/blai90/theory-of-mind-benchmark.git
 cd theory-of-mind-benchmark
 pip install -r requirements.txt
 ```
@@ -87,24 +82,21 @@ python examples/run_benchmark.py --compare gpt-4 claude-3-sonnet llama-2-7b
 python examples/run_benchmark.py --list-models
 ```
 
-## 📈 Example Results
+## Example Results
 
 ### Model Performance Comparison
 
+*Example results format (specific numbers depend on evaluation configuration and model versions):*
+
 | Model | Overall | False Belief | Social Reasoning | Pluralistic Ignorance |
 |-------|---------|--------------|------------------|-----------------------|
-| GPT-4 | 78.3% | 82.1% | 76.5% | 74.2% |
-| Claude-3-Sonnet | 75.6% | 79.8% | 73.4% | 71.9% |
-| LLaMA-2-70B | 68.2% | 71.5% | 66.8% | 63.1% |
+| GPT-4 | -- | -- | -- | -- |
+| Claude-3-Sonnet | -- | -- | -- | -- |
+| LLaMA-2-70B | -- | -- | -- | -- |
 
-### Clinical Comparison Example
+Run your own evaluations to generate performance metrics.
 
-For **Neurotypical (NBD) baseline**:
-- Clinical average: 85.2%
-- GPT-4 performance: 78.3% (-6.9%)
-- Claude-3 performance: 75.6% (-9.6%)
-
-## 🔬 Methodology
+## Methodology
 
 ### Question Format
 
@@ -141,7 +133,7 @@ Models are evaluated on:
 3. **Response Consistency**: Reliability across similar scenarios
 4. **Clinical Calibration**: Alignment with human population data
 
-## 🛠️ Technical Architecture
+## Technical Architecture
 
 ### Core Components
 
@@ -193,7 +185,7 @@ report_path = dashboard.create_comprehensive_report(
 )
 ```
 
-## 📊 Visualization Examples
+## Visualization Examples
 
 ### Performance Comparison
 Interactive bar charts showing overall accuracy across models with breakdown by question type and difficulty.
@@ -207,7 +199,7 @@ Line plots tracking ToM capability development across model scales, revealing em
 ### Error Analysis Heatmap
 2D heatmaps showing error patterns across question types and difficulty levels, identifying systematic failure modes.
 
-## 🔍 Analysis Features
+## Analysis Features
 
 ### Error Pattern Detection
 
@@ -241,7 +233,7 @@ model_sizes = [7, 13, 30, 65, 175]  # Billion parameters
 dashboard.plot_capability_emergence(evaluations, model_sizes)
 ```
 
-## 🧪 Testing and Validation
+## Testing and Validation
 
 ### Test Suite
 
@@ -272,7 +264,7 @@ mock_model = MockModelInterface(config, response_pattern="random")
 evaluation = benchmark.evaluate_model(mock_model, "Mock Model")
 ```
 
-## 📚 Research Foundation
+## Research Foundation
 
 ### Psychological Basis
 
@@ -301,7 +293,7 @@ The benchmark translates clinical assessment protocols to AI evaluation:
 3. **Systematic Evaluation**: Consistent methodology across conditions
 4. **Interpretable Results**: Meaningful comparison to human capabilities
 
-## 🔧 Configuration Options
+## Configuration Options
 
 ### Model Configuration
 
@@ -343,7 +335,7 @@ dashboard.model_colors = ['#FF6B6B', '#4ECDC4', '#45B7D1']
 dashboard.clinical_colors[ClinicalPopulation.NBD] = '#2E86AB'
 ```
 
-## 🤝 Contributing
+## Contributing
 
 We welcome contributions that enhance the benchmark's scientific rigor and practical utility:
 
@@ -363,7 +355,7 @@ We welcome contributions that enhance the benchmark's scientific rigor and pract
 
 ```bash
 # Set up development environment
-git clone https://github.com/yourusername/theory-of-mind-benchmark.git
+git clone https://github.com/blai90/theory-of-mind-benchmark.git
 cd theory-of-mind-benchmark
 pip install -e ".[dev]"
 
@@ -383,19 +375,19 @@ If you use this benchmark in your research, please cite:
 
 ```bibtex
 @misc{theory_of_mind_benchmark_2024,
-  title={Theory of Mind Benchmark for Large Language Models: Clinical Psychology Foundations for AI Safety},
-  author={[Your Name]},
+  title={Theory of Mind Benchmark for Large Language Models},
+  author={Lai, Brandon},
   year={2024},
-  url={https://github.com/yourusername/theory-of-mind-benchmark}
+  url={https://github.com/blai90/theory-of-mind-benchmark}
 }
 ```
 
-## 🔗 Related Work
+## Related Work
 
 ### Academic Papers
-- [Link to your ToM research papers]
-- [Related clinical psychology publications]
-- [AI safety applications of ToM]
+- Baron-Cohen, S., Leslie, A. M., & Frith, U. (1985). Does the autistic child have a theory of mind?
+- Premack, D., & Woodruff, G. (1978). Does the chimpanzee have a theory of mind?
+- Happé, F. G. (1994). An advanced test of theory of mind
 
 ### Other ToM Benchmarks
 - **ToMi**: Machine reading comprehension approach
@@ -407,11 +399,11 @@ If you use this benchmark in your research, please cite:
 - **Reading the Mind in the Eyes**: Emotion recognition task
 - **Faux Pas Test**: Social inappropriate detection
 
-## 📋 License
+## License
 
 MIT License - see [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - Clinical psychology research community for foundational ToM work
 - AI safety researchers highlighting the importance of social cognition
@@ -420,7 +412,7 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ---
 
-## 🎯 Future Directions
+## Future Directions
 
 ### Enhanced Capabilities
 - **Multimodal ToM**: Integration of visual and textual social cues
