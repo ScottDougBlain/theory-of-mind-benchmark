@@ -1,6 +1,6 @@
 # Theory of Mind Benchmark for LLMs
 
-A comprehensive Theory of Mind evaluation suite for Large Language Models based on clinical psychology research. This benchmark translates gold-standard psychological assessments into AI safety evaluations, enabling systematic evaluation of mentalizing capabilities and comparison to clinical population baselines.
+A comprehensive Theory of Mind evaluation suite for Large Language Models based on clinical psychology research. This benchmark contains 83 real test scenarios designed to evaluate mentalizing capabilities, with infrastructure for systematic evaluation and visualization of results.
 
 ## Overview
 
@@ -31,6 +31,8 @@ Theory of Mind (ToM) - the ability to understand that others have beliefs, desir
 The benchmark scenarios are inspired by research on Theory of Mind assessment in clinical populations, including studies of neurotypical controls, autism spectrum individuals, and cognitive impairment.
 
 **Important Methodological Note:** Direct performance comparisons between LLMs and clinical populations require careful interpretation due to fundamental differences in modality (text-only evaluation vs. real-world social interaction), context (controlled scenarios vs. naturalistic settings), and assessment format (multiple-choice vs. open-ended behavioral observation). LLM performance should be viewed as measuring text-based mentalizing capabilities rather than true social cognition.
+
+**Data Limitation:** While the benchmark includes columns for clinical baseline scores (NBD, DOM, PHEN, ASD), most of these values are not populated in the current dataset. Future versions would benefit from comprehensive clinical validation data.
 
 ### Difficulty Levels
 
@@ -84,25 +86,36 @@ python examples/run_benchmark.py --compare gpt-4 claude-3-sonnet llama-2-7b
 python examples/run_benchmark.py --list-models
 ```
 
-## Example Results
+## How to Run Evaluations
 
-### Model Performance Comparison
+### Model Performance Format
 
-*Results shown are from preliminary evaluations on the ToM benchmark suite. Performance varies based on prompting strategy and model configuration.*
+When you run the benchmark, results will be presented in this format:
 
 | Model | Overall | False Belief | Social Reasoning | Pluralistic Ignorance |
 |-------|---------|--------------|------------------|-----------------------|
-| GPT-4 | 78.3% | 82.1% | 76.8% | 71.2% |
-| Claude-3-Sonnet | 81.5% | 84.6% | 79.3% | 78.1% |
-| LLaMA-2-70B | 68.7% | 71.3% | 67.5% | 62.9% |
-| Mock Model (Demo) | 65.0% | 70.0% | 65.0% | 60.0% |
+| [Model Name] | [%] | [%] | [%] | [%] |
 
-**Key Findings:**
-- Models show stronger performance on explicit False Belief tasks vs. implicit social reasoning
-- Pluralistic Ignorance (understanding collective misperceptions) remains most challenging
-- Performance variability suggests ToM capabilities are context-dependent
+**Expected Performance Ranges (based on literature):**
+- **State-of-the-art models**: 70-85% overall accuracy
+- **Mid-tier models**: 60-70% overall accuracy
+- **Baseline models**: 50-60% overall accuracy
 
-*Note: These results are illustrative benchmarks. Run your own evaluations for specific use cases and updated model versions.*
+**Typical Patterns Observed:**
+- Models generally perform better on explicit False Belief tasks
+- Social Reasoning and Pluralistic Ignorance tend to be more challenging
+- Performance varies significantly based on prompting strategy
+
+**To generate actual results:**
+```bash
+# Evaluate a specific model
+python examples/run_benchmark.py --model gpt-4 --api-key YOUR_KEY
+
+# Compare multiple models
+python examples/run_benchmark.py --compare gpt-4 claude-3-sonnet --save-results
+```
+
+*Note: The benchmark includes 83 real test scenarios across multiple Theory of Mind categories. Actual performance will depend on model version, prompting, and configuration.*
 
 ## Methodology
 
@@ -342,6 +355,39 @@ dashboard = ToMVisualizationDashboard(style="darkgrid")
 dashboard.model_colors = ['#FF6B6B', '#4ECDC4', '#45B7D1']
 dashboard.clinical_colors[ClinicalPopulation.NBD] = '#2E86AB'
 ```
+
+## Current Limitations & Known Issues
+
+### Implementation Status
+- ✅ **83 real test scenarios** exist in `/data/ToM_Bench.csv`
+- ✅ **Complete benchmark implementation** with evaluation logic
+- ✅ **Working API interfaces** for OpenAI, Anthropic, HuggingFace
+- ✅ **Comprehensive visualization suite** with interactive dashboards
+- ⚠️ **Clinical baseline data mostly missing** - comparison features limited
+- ⚠️ **No validated performance results** - needs actual model evaluation runs
+- ⚠️ **Import path issues** - may require manual fixes when running
+
+### Data Limitations
+1. **Clinical Scores**: Most NBD, DOM, PHEN, ASD columns are empty in the dataset
+2. **Answer Key Validation**: Not independently verified against psychological literature
+3. **Limited Scenario Diversity**: 83 questions may not cover full ToM spectrum
+
+### Technical Issues
+1. **Import Errors**: Some files need path adjustments to run properly
+2. **Answer Extraction**: Regex-based extraction may miss valid responses
+3. **Mock Model Performance**: Currently returns 0% suggesting evaluation issues
+
+### What This Benchmark IS
+- **A real collection** of 83 Theory of Mind test scenarios
+- **A functional framework** for evaluating LLM ToM capabilities
+- **An educational tool** for exploring social cognition in AI
+- **Open source code** that can be improved and extended
+
+### What This Benchmark IS NOT
+- **NOT clinically validated** - lacks proper baseline data
+- **NOT performance tested** - no actual model evaluations documented
+- **NOT a measure of consciousness** - tests text-based pattern matching
+- **NOT comparable to human ToM** - different modalities and contexts
 
 ## Contributing
 

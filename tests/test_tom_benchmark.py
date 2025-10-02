@@ -2,10 +2,14 @@
 Tests for the Theory of Mind benchmark implementation.
 """
 
+import sys
+from pathlib import Path
+# Add parent directory to path for imports
+sys.path.append(str(Path(__file__).parent.parent))
+
 import pytest
 import pandas as pd
 import numpy as np
-from pathlib import Path
 import tempfile
 import json
 

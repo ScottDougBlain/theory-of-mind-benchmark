@@ -9,6 +9,7 @@ import os
 import sys
 import argparse
 from pathlib import Path
+from typing import List
 
 # Add src to path for imports
 sys.path.append(str(Path(__file__).parent.parent / "src"))
