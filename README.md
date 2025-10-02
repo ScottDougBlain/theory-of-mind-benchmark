@@ -41,7 +41,7 @@ The benchmark scenarios are inspired by research on Theory of Mind assessment in
 ### Installation
 
 ```bash
-git clone https://github.com/blai90/theory-of-mind-benchmark.git
+git clone https://github.com/ScottDougBlain/theory-of-mind-benchmark.git
 cd theory-of-mind-benchmark
 pip install -r requirements.txt
 ```
@@ -355,7 +355,7 @@ We welcome contributions that enhance the benchmark's scientific rigor and pract
 
 ```bash
 # Set up development environment
-git clone https://github.com/blai90/theory-of-mind-benchmark.git
+git clone https://github.com/ScottDougBlain/theory-of-mind-benchmark.git
 cd theory-of-mind-benchmark
 pip install -e ".[dev]"
 
@@ -376,9 +376,9 @@ If you use this benchmark in your research, please cite:
 ```bibtex
 @misc{theory_of_mind_benchmark_2024,
   title={Theory of Mind Benchmark for Large Language Models},
-  author={Lai, Brandon},
+  author={Blain, Scott},
   year={2024},
-  url={https://github.com/blai90/theory-of-mind-benchmark}
+  url={https://github.com/ScottDougBlain/theory-of-mind-benchmark}
 }
 ```
 
